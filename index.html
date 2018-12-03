@@ -104,32 +104,6 @@
         controls.enablePan = false;
     }
 
-    function quaternionMultiply(a, b) {
-        var w = a[0] * b[0] - a[1] * b[1] - a[2] * b[2] - a[3] * b[3];
-        var x = a[1] * b[0] + a[0] * b[1] + a[2] * b[3] - a[3] * b[2];
-        var y = a[2] * b[0] + a[0] * b[2] + a[3] * b[1] - a[1] * b[3];
-        var z = a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1];
-
-        return [w, x, y, z];
-    }
-
-    function computeQuaternion() {
-        var quaternion = getBaseQuaternion(
-            deviceOrientationData.alpha,
-            deviceOrientationData.beta,
-            deviceOrientationData.gamma); // q
-
-        var worldTransform = getWorldTransformationQuaternion(); // q_w
-
-        var worldAdjustedQuaternion = quaternionMultiply(quaternion, worldTransform); // q'_w
-
-        var screenTransform = getScreenTransformationQuaternion(currentScreenOrientation); // q_s
-
-        var finalQuaternion = quaternionMultiply(worldAdjustedQuaternion, screenTransform); // q'_s
-
-        return finalQuaternion; // [ w, x, y, z ]
-    }
-
     //生成gui设置配置项
     var gui;
     function initGui() {
@@ -171,7 +145,6 @@
         initLight();
         initModel();
         initControls();
-        computeQuaternion();
         initStats();
         initGui();
 
