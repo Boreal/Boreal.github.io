@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <style type="text/css">
-        html, body {
+        html,
+        body {
             margin: 0;
             height: 100%;
         }
@@ -12,9 +14,9 @@
         canvas {
             display: block;
         }
-
     </style>
 </head>
+
 <body onload="draw();">
 </body>
 <script src="./js/three.js"></script>
@@ -25,7 +27,7 @@
     var renderer;
 
     function initRender() {
-        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer = new THREE.WebGLRenderer({ antialias: true });
         //renderer.setClearColor(new THREE.Color(0xEEEEEE, 1.0)); //设置背景颜色
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
@@ -35,7 +37,7 @@
 
     function initCamera() {
         camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-        camera.target = new THREE.Vector3( 0, 100, 0 );
+        camera.target = new THREE.Vector3(0, 100, 0);
     }
 
     var scene;
@@ -57,15 +59,15 @@
         //scene.add(object);
 
         //声明一个球体
-        var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
+        var geometry = new THREE.SphereBufferGeometry(500, 60, 40);
         // 反转X轴上的几何图形，使所有的面点向内。
-        geometry.scale( - 1, 1, 1 );
+        geometry.scale(- 1, 1, 1);
         //声明球体纹理
-        var material = new THREE.MeshBasicMaterial( {
-            map: new THREE.TextureLoader().load( './img/quanjing.jpg' ) //加载一整张纹理图片
-        } );
-        mesh = new THREE.Mesh( geometry, material );
-        scene.add( mesh );
+        var material = new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load('./img/quanjing.jpg') //加载一整张纹理图片
+        });
+        mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
 
     }
 
@@ -89,7 +91,7 @@
         // 使动画循环使用时阻尼或自转 意思是否有惯性
         controls.enableDamping = true;
         //动态阻尼系数 就是鼠标拖拽旋转灵敏度
-        //controls.dampingFactor = 0.25;
+        controls.dampingFactor = 0.25;
         //是否可以缩放
         controls.enableZoom = true;
         //是否自动旋转
@@ -97,9 +99,35 @@
         //设置相机距离原点的最远距离
         controls.minDistance = 20;
         //设置相机距离原点的最远距离
-        controls.maxDistance = 10000;
+        controls.maxDistance = 1500;
         //是否开启右键拖拽
-        controls.enablePan = true;
+        controls.enablePan = false;
+    }
+
+    function quaternionMultiply(a, b) {
+        var w = a[0] * b[0] - a[1] * b[1] - a[2] * b[2] - a[3] * b[3];
+        var x = a[1] * b[0] + a[0] * b[1] + a[2] * b[3] - a[3] * b[2];
+        var y = a[2] * b[0] + a[0] * b[2] + a[3] * b[1] - a[1] * b[3];
+        var z = a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1];
+
+        return [w, x, y, z];
+    }
+
+    function computeQuaternion() {
+        var quaternion = getBaseQuaternion(
+            deviceOrientationData.alpha,
+            deviceOrientationData.beta,
+            deviceOrientationData.gamma); // q
+
+        var worldTransform = getWorldTransformationQuaternion(); // q_w
+
+        var worldAdjustedQuaternion = quaternionMultiply(quaternion, worldTransform); // q'_w
+
+        var screenTransform = getScreenTransformationQuaternion(currentScreenOrientation); // q_s
+
+        var finalQuaternion = quaternionMultiply(worldAdjustedQuaternion, screenTransform); // q'_s
+
+        return finalQuaternion; // [ w, x, y, z ]
     }
 
     //生成gui设置配置项
@@ -143,6 +171,7 @@
         initLight();
         initModel();
         initControls();
+        computeQuaternion();
         initStats();
         initGui();
 
@@ -150,4 +179,5 @@
         window.onresize = onWindowResize;
     }
 </script>
+
 </html>
