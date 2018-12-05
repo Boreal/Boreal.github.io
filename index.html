@@ -49,7 +49,7 @@
 
 	<script>
 
-		if (WEBGL.isWebGLAvailable() === false) {
+		if (!WEBGL.isWebGLAvailable()) {
 
 			document.body.appendChild(WEBGL.getWebGLErrorMessage());
 
@@ -63,7 +63,6 @@
 		var mixers = [];
 
 		init();
-		initSphere();
 		animate();
 
 		function init() {
@@ -79,8 +78,11 @@
 			controls.update();
 
 			scene = new THREE.Scene();
-			scene.background = new THREE.Color(0xa0a0a0);
+			//scene.background = new THREE.Color(0xa0a0a0);
 			//scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );
+
+			//创建球体全景
+			initSphere();
 
 			light = new THREE.HemisphereLight(0xffffff, 0x444444);
 			light.position.set(0, 200, 0);
@@ -108,6 +110,7 @@
 			// grid.material.transparent = true;
 			// scene.add( grid );
 
+
 			// model
 			var loader = new THREE.FBXLoader();
 			loader.load('./model/Samba Dancing.fbx', function (object) {
@@ -133,10 +136,11 @@
 
 			});
 
-			renderer = new THREE.WebGLRenderer({ antialias: true });
+			renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 			renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			renderer.shadowMap.enabled = true;
+			//renderer.setClearAlpha(0.0);
 			container.appendChild(renderer.domElement);
 
 			window.addEventListener('resize', onWindowResize, false);
@@ -147,13 +151,13 @@
 
 		}
 
+		//窗口变动触发的函数
 		function onWindowResize() {
 
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
-
+			render();
 			renderer.setSize(window.innerWidth, window.innerHeight);
-
 		}
 
 		//创建球体
@@ -168,8 +172,9 @@
 			//声明球体纹理
 			var material = new THREE.MeshBasicMaterial({
 				//加载一整张纹理图片
-				map: new THREE.TextureLoader().load('./res/pc.jpg') 
+				map: new THREE.TextureLoader().load('./res/pc.jpg')
 			});
+			material.side = THREE.DoubleSide;
 			mesh = new THREE.Mesh(geometry, material);
 			scene.add(mesh);
 		}
