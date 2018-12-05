@@ -1,151 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<title>three.js webgl - FBX loader</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a {
+				color: #046;
+				font-weight: bold;
+			}
+		</style>
+	</head>
 
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <title>Opanorama - H5全景</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            outline: 0;
-            letter-spacing: 140%;
-            font-family: "Microsoft YaHei";
-        }
+	<body>
+		<div id="info">
+			<!-- <a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - FBXLoader<br />
+			Character and animation from <a href="https://www.mixamo.com/" target="_blank" rel="noopener">Mixamo</a> -->
+		</div>
 
-        .panorama,
-        .wrap {
-            position: absolute;
-            z-index: 0;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
+		<script src="./js/three.js"></script>
 
-        .wrap {
-            z-index: 10;
-        }
+		<script src="./js/inflate.min.js"></script>
+		<script src="./js/FBXLoader.js"></script>
 
-        .qrcode-wrap {
-            z-index: 100;
-            background-color: #FFF;
-            padding: 20px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+		<script src="./js/OrbitControls.js"></script>
 
-        .inner {
-            position: relative;
-            top: 80%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            margin: auto;
-            overflow: hidden;
-            background-color: rgba(250, 250, 250, 0.5);
-            padding: 10px;
-            text-align: center;
-        }
+		<script src="./js/WebGL.js"></script>
+		<script src="./js/stats.min.js"></script>
 
-        .title {
-            font-weight: bold;
-        }
+		<script>
 
-        .link {
-            background: none;
-            outline: none;
-            border: none;
-            color: #000;
-            font-weight: bold;
-        }
+			if ( WEBGL.isWebGLAvailable() === false ) {
 
-        .btn-wrap {
-            margin-top: 10px;
-            text-align: center;
-        }
-    </style>
-</head>
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 
-<body>
-    <div class="panorama"></div>
-    <div class="wrap" style="display: none;">
-        <!-- <div class="inner">
-            <p><span class="title">Opanorama.js</span> -- 基于Threejs，同时支持手势和陀螺仪的web全景JS库。</p>
-            <div class="btn-wrap">
-                <a class="link" target="_blank" href="https://github.com/azuoge/Opanorama">Github</a>
-                <span>&nbsp;&nbsp;</span>
-                <a class="link" id="show-qrcode" href="javascript:void(0);">H5示例</a>
-            </div> -->
-        </div>
-    </div>
-    <div class="qrcode-wrap" style="display: none;">
-        <!-- <div><img width="200" src="./Opanorama-master/res/qrcode.png"></div>
-        <div class="btn-wrap">
-            [ <a class="link" id="close-qrcode" href="javascript:void(0);">关闭</a> ]
-        </div> -->
-    </div>
-    <script>
-        var ua = navigator.userAgent || '';
-        var isMobile = ua.match(/(iPad).*OS\s([\d_]+)/)
-            || ua.match(/(iPhone\sOS)\s([\d_]+)/)
-            || ua.match(/Android/);
-        (function () {
-            if (!isMobile) {
-                document.querySelector('.wrap').style.display = 'block';
-            }
+			}
 
-            var qrcodeWrap = document.querySelector('.qrcode-wrap');
-            document.querySelector('#show-qrcode').addEventListener('click', function () {
-                qrcodeWrap.style.display = 'block';
-            });
-            document.querySelector('#close-qrcode').addEventListener('click', function () {
-                qrcodeWrap.style.display = 'none';
-            });
-        })();
-    </script>
-    <script src="./three.js"></script>
-    <script src="./dist/Opanorama.js"></script>
-    <script>
-        (function () {
-            var longitude = 0, mark = 'add';
-            new Opanorama({
-                offsetLongitude: 0,
-                offsetLatitude: 90,
-                fov: 90,
-                url: './res/' + (isMobile ? Math.floor((Math.random() * 3)) : 'pc') + '.jpg',
-                container: document.querySelector('.panorama'),
-                supportTouch: true,
-                supportOrient: true,
-                onFrame: function (lon, lat) {
-                    if (isMobile) {
-                        return;
-                    }
-                    if (longitude == 360) {
-                        mark = 'sub';
-                    }
-                    if (longitude === 0) {
-                        mark = 'add';
-                    }
+			var container, stats, controls;
+			var camera, scene, renderer, light;
 
-                    switch (mark) {
-                        case 'add':
-                            longitude += 0.05;
-                            break;
-                        case 'sub':
-                            longitude -= 0.05;
-                            break;
-                    }
-                    return { lon: lon + longitude, lat: -90 }
-                }
-            });
-        })();
-    </script>
-</body>
+			var clock = new THREE.Clock();
 
+			var mixers = [];
+
+			init();
+			animate();
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera.position.set( 100, 200, 300 );
+
+				controls = new THREE.OrbitControls( camera );
+				controls.target.set( 0, 100, 0 );
+				controls.update();
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xa0a0a0 );
+				scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );
+
+				light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+				light.position.set( 0, 200, 0 );
+				scene.add( light );
+
+				light = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0, 200, 100 );
+				light.castShadow = true;
+				light.shadow.camera.top = 180;
+				light.shadow.camera.bottom = - 100;
+				light.shadow.camera.left = - 120;
+				light.shadow.camera.right = 120;
+				scene.add( light );
+
+				// scene.add( new THREE.CameraHelper( light.shadow.camera ) );
+
+				// ground
+				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+				mesh.rotation.x = - Math.PI / 2;
+				mesh.receiveShadow = true;
+				scene.add( mesh );
+
+				var grid = new THREE.GridHelper( 2000, 20, 0x000000, 0x000000 );
+				grid.material.opacity = 0.2;
+				grid.material.transparent = true;
+				scene.add( grid );
+
+				// model
+				var loader = new THREE.FBXLoader();
+				loader.load( './model/Samba Dancing.fbx', function ( object ) {
+
+					object.mixer = new THREE.AnimationMixer( object );
+					mixers.push( object.mixer );
+
+					var action = object.mixer.clipAction( object.animations[ 0 ] );
+					action.play();
+
+					object.traverse( function ( child ) {
+
+						if ( child.isMesh ) {
+
+							child.castShadow = true;
+							child.receiveShadow = true;
+
+						}
+
+					} );
+
+					scene.add( object );
+
+				} );
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.shadowMap.enabled = true;
+				container.appendChild( renderer.domElement );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				// stats
+				// stats = new Stats();
+				// container.appendChild( stats.dom );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				if ( mixers.length > 0 ) {
+
+					for ( var i = 0; i < mixers.length; i ++ ) {
+
+						mixers[ i ].update( clock.getDelta() );
+
+					}
+
+				}
+
+				renderer.render( scene, camera );
+
+				stats.update();
+
+			}
+
+		</script>
+
+	</body>
 </html>
