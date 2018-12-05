@@ -109,8 +109,8 @@
             });
         })();
     </script>
-    <script src="./Opanorama-master/three.js"></script>
-    <script src="./Opanorama-master/dist/Opanorama.js"></script>
+    <script src="./three.js"></script>
+    <script src="./dist/Opanorama.js"></script>
     <script>
         (function () {
             var longitude = 0, mark = 'add';
@@ -118,8 +118,10 @@
                 offsetLongitude: 0,
                 offsetLatitude: 90,
                 fov: 90,
-                url: './Opanorama-master/res/' + (isMobile ? Math.floor((Math.random() * 3)) : 'pc') + '.jpg',
+                url: './res/' + (isMobile ? Math.floor((Math.random() * 3)) : 'pc') + '.jpg',
                 container: document.querySelector('.panorama'),
+                supportTouch: true,
+                supportOrient: true,
                 onFrame: function (lon, lat) {
                     if (isMobile) {
                         return;
