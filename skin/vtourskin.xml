@@ -61,7 +61,9 @@
 
 	<!-- iPhone X safe-area support: use the horizontal safe-area only -->	
 	<display safearea="h-only" />
-
+	 <action name="entervr" autorun="onstart" devices='mobile'>
+		delayedcall(2.0,webvr.enterVR());
+	</action>
 	<!-- mouse / touch / keyboard(button) control settings - http://krpano.com/docu/xml/#control -->
 	<control mouse="drag"
 	         touch="drag"
