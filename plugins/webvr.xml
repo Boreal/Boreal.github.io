@@ -226,7 +226,7 @@
 
 	<layer name="webvr_exitbutton" keep="true" vr="true"
 	       style="webvr_button_style"
-	       html="Exit VR"
+	       html="退出VR"
 	       align="top" y="24"
 	       autoalpha="true" alpha="0.0"
 	       onclick="webvr.exitVR();"
@@ -234,7 +234,7 @@
 
 	<layer name="webvr_setupbutton" keep="true" vr="true"
 	       style="webvr_button_style"
-	       html="VR Setup"
+	       html="VR设置"
 	       align="bottom" y="24"
 	       autoalpha="true" alpha="0.0"
 	       onclick="vr_setup();"
@@ -285,11 +285,11 @@
 		if(i_screensize == 'auto', copy(i_screensize, webvr.devicesize));
 		if(i_screensize LE 0, set(i_screensize, 5.0));
 		roundval(i_screensize, 1);
-		txtadd(i_screensize, ' inch');
+		txtadd(i_screensize, '英寸');
 
 		copy(i_ipd, webvr.mobilevr_ipd);
 		roundval(i_ipd, 1);
-		txtadd(i_ipd, ' mm');
+		txtadd(i_ipd, '毫米');
 
 		copy(i_fov, webvr.mobilevr_lens_fov);
 		roundval(i_fov, 1);
@@ -330,11 +330,12 @@
 		set(sizcol, #FFFFFF);
 		copy(i_devicename, webvr.devicename);
 		if(i_devicename == 'Unknown',
+		set(i_devicename == '未知设备');
 			if(webvr.mobilevr_screensize == 'auto',
 				set(sizcol, #AA0000);
 				set(known_size, false);
 			  ,
-				set(i_devicename, 'Custom');
+				set(i_devicename, '自定义');
 			);
 		);
 
@@ -353,28 +354,28 @@
 		
 		<!-- create the text elements -->
 		set(vrs.vr_setup_text_parent, 'vr_setup_m1');
-		vr_setup_createtext(vr_setup_title, 'MOBILE VR SETUP',       center, center, 0, -225, #FFFFFF,     false);
+		vr_setup_createtext(vr_setup_title, 'VR设置',       center, center, 0, -225, #FFFFFF,     false);
 
-		vr_setup_createtext(vr_setup_dvn1, 'Device:',         center, right,  0, -145, #FFFFFF,     true, vr_setup_select('screen') );
+		vr_setup_createtext(vr_setup_dvn1, '设备:',         center, right,  0, -145, #FFFFFF,     true, vr_setup_select('screen') );
 		vr_setup_createtext(vr_setup_dvn2, get(i_devicename), center, left,   0, -145, get(sizcol), true, vr_setup_select('screen') );
-		vr_setup_createtext(vr_setup_siz1, 'Screensize:',     center, right,  0, -105, #FFFFFF,     true, vr_setup_select('screen') );
+		vr_setup_createtext(vr_setup_siz1, '屏幕尺寸:',     center, right,  0, -105, #FFFFFF,     true, vr_setup_select('screen') );
 		vr_setup_createtext(vr_setup_siz2, get(i_screensize), center, left,   0, -105, get(sizcol), true, vr_setup_select('screen') );
 
-		vr_setup_createtext(vr_setup_ipd1, 'IPD:',            center, right,  0,  -35, #FFFFFF,     true, vr_setup_select('ipd') );
+		vr_setup_createtext(vr_setup_ipd1, '瞳间距离:',            center, right,  0,  -35, #FFFFFF,     true, vr_setup_select('ipd') );
 		vr_setup_createtext(vr_setup_ipd2, get(i_ipd),        center, left,   0,  -35, #FFFFFF,     true, vr_setup_select('ipd') );
 
-		vr_setup_createtext(vr_setup_hmd1, 'VR Headset:',     center, right,  0,  +35, #FFFFFF,     true, vr_setup_select('headset') );
+		vr_setup_createtext(vr_setup_hmd1, 'VR设备:',     center, right,  0,  +35, #FFFFFF,     true, vr_setup_select('headset') );
 		vr_setup_createtext(vr_setup_hmd2, get(i_headset),    center, left,   0,  +35, #FFFFFF,     true, vr_setup_select('headset') );
 		
-		vr_setup_createtext(vr_setup_hmd3, 'Customize',       center, center, 0,  +75, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_customize_headset() );
+		vr_setup_createtext(vr_setup_hmd3, 'VR设备自定义',       center, center, 0,  +75, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_customize_headset() );
 
 		if(webvr.iswebvr == false,
-			vr_setup_createtext(vr_setup_cal, 'Calibrate Gyroscope',   center, center,    0, +145, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_calibration() );
+			vr_setup_createtext(vr_setup_cal, '陀螺仪校准',   center, center,    0, +145, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_calibration() );
 		);
 
-		vr_setup_createtext(vr_setup_sav, 'SAVE',          center, center, -200, +225, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_save() );
-		vr_setup_createtext(vr_setup_rst, 'RESET',         center, center,    0, +225, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_reset() );
-		vr_setup_createtext(vr_setup_cls, 'CLOSE',         center, center, +200, +225, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_close() );
+		vr_setup_createtext(vr_setup_sav, '保存',          center, center, -200, +225, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_save() );
+		vr_setup_createtext(vr_setup_rst, '恢复默认值',         center, center,    0, +225, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_reset() );
+		vr_setup_createtext(vr_setup_cls, '关闭',         center, center, +200, +225, #FFFFFF,     true, set(bg,true), set(bg,false), vr_setup_close() );
 		
 		<!-- and the adjusting buttons -->
 		vr_setup_createbutton(vr_setup_btn1, '&#60;', left,  left,  5%, -35, #FFFFFF, true, null);
@@ -385,38 +386,38 @@
 		set(vrs.vr_setup_text_parent, 'vr_setup_m3');
 		vr_setup_createtext(vr_setup_m31, 'VR HEADSET', center, center, 0, -225, #FFFFFF, false);
 		
-		vr_setup_createtext(vr_setup_fov1,  'FOV:',           center, right,  0,  -80,  #FFFFFF,    true, vr_setup_select('fov') );
+		vr_setup_createtext(vr_setup_fov1,  '视角宽度:',           center, right,  0,  -80,  #FFFFFF,    true, vr_setup_select('fov') );
 		vr_setup_createtext(vr_setup_fov2, get(i_fov),        center, left,   0,  -80,  #FFFFFF,    true, vr_setup_select('fov') );
-		vr_setup_createtext(vr_setup_dst1, 'Distortion:',     center, right,  0,  -32,  #FFFFFF,    true, vr_setup_select('dist') );
+		vr_setup_createtext(vr_setup_dst1, '形变强度:',     center, right,  0,  -32,  #FFFFFF,    true, vr_setup_select('dist') );
 		vr_setup_createtext(vr_setup_dst2, get(i_dist),       center, left,   0,  -32,  #FFFFFF,    true, vr_setup_select('dist') );
-		vr_setup_createtext(vr_setup_d2tx, 'Dist2:',          center, right,  0,  +16,  #FFFFFF,    true, vr_setup_select('dist2k1') );
+		vr_setup_createtext(vr_setup_d2tx, '形变强度微调:',          center, right,  0,  +16,  #FFFFFF,    true, vr_setup_select('dist2k1') );
 		vr_setup_createtext(vr_setup_d2k1, get(vrs.i_dist2_k1),   center, left,   0,  +16,  #FFFFFF,    true, vr_setup_select('dist2k1') );
 		vr_setup_createtext(vr_setup_d2k2, get(vrs.i_dist2_k2),   center, left, +100, +16,  #FFFFFF,    true, vr_setup_select('dist2k2') );
 		vr_setup_createtext(vr_setup_d2k3, get(vrs.i_dist2_k3),   center, left, +200, +16,  #FFFFFF,    true, vr_setup_select('dist2k3') );
 		vr_setup_createtext(vr_setup_d2k4, get(vrs.i_dist2_k4),   center, left, +300, +16,  #FFFFFF,    true, vr_setup_select('dist2k4') );
 		
 		
-		vr_setup_createtext(vr_setup_cac1, 'CA Corr:',        center, right,  0,  +64,  #FFFFFF,    true, vr_setup_select('ca') );
+		vr_setup_createtext(vr_setup_cac1, '相差校准:',        center, right,  0,  +64,  #FFFFFF,    true, vr_setup_select('ca') );
 		vr_setup_createtext(vr_setup_cac2, get(i_ca),         center, left,   0,  +64,  #FFFFFF,    true, vr_setup_select('ca') );
-		vr_setup_createtext(vr_setup_vig1, 'Vignette:',       center, right,  0, +112,  #FFFFFF,    true, vr_setup_select('vignette') );
+		vr_setup_createtext(vr_setup_vig1, '装饰边框:',       center, right,  0, +112,  #FFFFFF,    true, vr_setup_select('vignette') );
 		vr_setup_createtext(vr_setup_vig2, get(i_vig),        center, left,   0, +112,  #FFFFFF,    true, vr_setup_select('vignette') );
-		vr_setup_createtext(vr_setup_olp1, 'Overlap:',        center, right,  0, +160,  #FFFFFF,    true, vr_setup_select('overlap') );
+		vr_setup_createtext(vr_setup_olp1, '重叠:',        center, right,  0, +160,  #FFFFFF,    true, vr_setup_select('overlap') );
 		vr_setup_createtext(vr_setup_olp2, get(i_overlap),    center, left,   0, +160,  #FFFFFF,    true, vr_setup_select('overlap') );
 				
-		vr_setup_createtext(vr_setup_m35, 'CLOSE',       center, center, 0, +225, #FFFFFF, true, set(bg,true), set(bg,false), vr_setup_close_sub_menus() );
+		vr_setup_createtext(vr_setup_m35, '关闭',       center, center, 0, +225, #FFFFFF, true, set(bg,true), set(bg,false), vr_setup_close_sub_menus() );
 		
 		
 		<!-- create the calibration text elements -->
 		set(vrs.vr_setup_text_parent, 'vr_setup_m2');
-		vr_setup_createtext(vr_setup_cb1, 'GYROSCOPE', center, center, 0, -225, #FFFFFF, false);
-		vr_setup_createtext(vr_setup_cb2, 'Place the device on a flat and[br]stable surface and tab calibrate[br]to correct a gyroscope drifting.', center, center, 0, -95, #FFFFFF, false, vr_setup_select('screen') );
-		vr_setup_createtext(vr_setup_cb3, 'CALIBRATE',   center, center, 0,  +55, #FFFFFF, true, set(bg,true), set(bg,false), vr_setup_do_calibration() );
-		vr_setup_createtext(vr_setup_cb4, 'RESET',       center, center, 0, +125, #FFFFFF, true, set(bg,true), set(bg,false), webvr.resetcalibration() );
-		vr_setup_createtext(vr_setup_cb5, 'CLOSE',       center, center, 0, +225, #FFFFFF, true, set(bg,true), set(bg,false), vr_setup_close_sub_menus() );
+		vr_setup_createtext(vr_setup_cb1, '陀螺仪校准', center, center, 0, -225, #FFFFFF, false);
+		vr_setup_createtext(vr_setup_cb2, '请把设备水平放置[br]点击校准按钮[br]进行陀螺仪校准.', center, center, 0, -95, #FFFFFF, false, vr_setup_select('screen') );
+		vr_setup_createtext(vr_setup_cb3, '校准',   center, center, 0,  +55, #FFFFFF, true, set(bg,true), set(bg,false), vr_setup_do_calibration() );
+		vr_setup_createtext(vr_setup_cb4, '重置',       center, center, 0, +125, #FFFFFF, true, set(bg,true), set(bg,false), webvr.resetcalibration() );
+		vr_setup_createtext(vr_setup_cb5, '关闭',       center, center, 0, +225, #FFFFFF, true, set(bg,true), set(bg,false), vr_setup_close_sub_menus() );
 		
-		vr_setup_createtext(vr_setup_cb6, 'Calibrating...',      bottom, center, 0, 40, #FFFFFF, false, null );
-		vr_setup_createtext(vr_setup_cb7, 'Calibration okay.',   bottom, center, 0, 40, #FFFFFF, false, null );
-		vr_setup_createtext(vr_setup_cb8, 'Calibration failed!', bottom, center, 0, 40, #FFFFFF, false, null );
+		vr_setup_createtext(vr_setup_cb6, '校准中...',      bottom, center, 0, 40, #FFFFFF, false, null );
+		vr_setup_createtext(vr_setup_cb7, '校准完成.',   bottom, center, 0, 40, #FFFFFF, false, null );
+		vr_setup_createtext(vr_setup_cb8, '校准失败!', bottom, center, 0, 40, #FFFFFF, false, null );
 		set(layer[vr_setup_cb6].autoalpha, true);
 		set(layer[vr_setup_cb7].autoalpha, true);
 		set(layer[vr_setup_cb8].autoalpha, true);
@@ -479,12 +480,12 @@
 		if(i_screensize LE 0, set(i_screensize, 5.0); );
 		roundval(i_screensize, 1);
 		set(layer[vr_setup_dvn2].html, get(webvr.devicename));
-		txtadd(layer[vr_setup_siz2].html, get(i_screensize), ' inch');
+		txtadd(layer[vr_setup_siz2].html, get(i_screensize), ' 英寸');
 
 		set(webvr.mobilevr_ipd, 63.5);
 		copy(i_ipd, webvr.mobilevr_ipd);
 		roundval(i_ipd, 1);
-		txtadd(layer[vr_setup_ipd2].html, get(i_ipd), ' mm');
+		txtadd(layer[vr_setup_ipd2].html, get(i_ipd), ' 毫米');
 
 		<!-- set fake custom lens settings and call 'next' headset to switch to the default 'Cardboard' settings -->
 		set(webvr.mobilevr_lens_fov, 100);
@@ -776,7 +777,7 @@
 
 
 	<action name="vr_setup_change_screen" scope="local">
-		set(layer[vr_setup_dvn2].html, 'Custom');
+		set(layer[vr_setup_dvn2].html, '自定义');
 		set(layer[vr_setup_dvn2].css, calc('color:#FFFFFF;font-size:'+40*webvr_setup_scale+'px;font-weight:bold;'));
 		set(layer[vr_setup_siz2].css, calc('color:#FFFFFF;font-size:'+40*webvr_setup_scale+'px;font-weight:bold;'));
 	</action>
