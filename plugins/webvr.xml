@@ -285,11 +285,11 @@
 		if(i_screensize == 'auto', copy(i_screensize, webvr.devicesize));
 		if(i_screensize LE 0, set(i_screensize, 5.0));
 		roundval(i_screensize, 1);
-		txtadd(i_screensize, '英寸');
+		txtadd(i_screensize, ' 英寸');
 
 		copy(i_ipd, webvr.mobilevr_ipd);
 		roundval(i_ipd, 1);
-		txtadd(i_ipd, '毫米');
+		txtadd(i_ipd, ' 毫米');
 
 		copy(i_fov, webvr.mobilevr_lens_fov);
 		roundval(i_fov, 1);
@@ -330,7 +330,7 @@
 		set(sizcol, #FFFFFF);
 		copy(i_devicename, webvr.devicename);
 		if(i_devicename == 'Unknown',
-		set(i_devicename == '未知设备');
+		set(i_devicename, '未知设备');
 			if(webvr.mobilevr_screensize == 'auto',
 				set(sizcol, #AA0000);
 				set(known_size, false);
@@ -627,7 +627,7 @@
 		if(selected_var == 'screen',
 			set(vrs.setting,      vr_setup_siz2);
 			set(vrs.var_name,     'webvr.mobilevr_screensize');
-			set(vrs.var_postfix,  ' inch');
+			set(vrs.var_postfix,  ' 英寸');
 			copy(vrs.var_value,   get(vrs.var_name));
 			if(vrs.var_value == 'auto', copy(vrs.var_value, webvr.devicesize));
 			if(vrs.var_value LE 0, set(vrs.var_value, 5.0));
@@ -641,7 +641,7 @@
 		if(selected_var == 'ipd',
 			set(vrs.setting,      vr_setup_ipd2);
 			set(vrs.var_name,     'webvr.mobilevr_ipd');
-			set(vrs.var_postfix,  ' mm');
+			set(vrs.var_postfix,  ' 毫米');
 			copy(vrs.var_value,   get(vrs.var_name));
 			set(vrs.var_step,     0.1);
 			set(vrs.var_min,      40);
