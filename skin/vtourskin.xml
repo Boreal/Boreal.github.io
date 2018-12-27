@@ -103,6 +103,9 @@
 	<action name="gyro_available_info">
 		set(layer[gyrobutton].visible, true);
 	</action>
+	 <layer name="gyrobutton" url="gyroicon.png" scale="0.5" align="right" x="10" visible="false" 
+		       onclick="switch(plugin[gyro].enabled);"
+		       />
 	 
 	<!-- overwrite some settings from the webvr.xml for the skin integration -->
 	<plugin name="WebVR" keep="true" devices="html5"
