@@ -94,7 +94,16 @@
 
 	<!-- include VR support - http://krpano.com/plugins/webvr/ -->
 	<include url="%SWFPATH%/plugins/webvr.xml" devices="html5" />
-
+	
+	 <plugin name="gyro" devices="html5"
+	        url="%SWFPATH%/plugins/gyro2.js"
+	        enabled="false"
+                onavailable="gyro_available_info();"
+	        />
+	<action name="gyro_available_info">
+		set(layer[gyrobutton].visible, true);
+	</action>
+	 
 	<!-- overwrite some settings from the webvr.xml for the skin integration -->
 	<plugin name="WebVR" keep="true" devices="html5"
 	        pluginurl="%SWFPATH%/plugins/webvr.js"
