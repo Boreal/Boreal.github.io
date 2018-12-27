@@ -1,7 +1,7 @@
 ﻿<krpano version="1.19" title="全景漫游">
 
 	<include url="skin/vtourskin.xml" />
-	<plugin name="skin_gyro" enabled="true"/>
+
 	<!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
 	<skin_settings maps="true"
 	               maps_type="bing"
