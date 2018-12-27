@@ -595,7 +595,7 @@
 		calc(show_selbuttons, scene.count GT 1);
 		calc(show_thumbutton, skin_settings.thumbs == true);
 		calc(show_mapbutton,  skin_settings.maps == true);
-		calc(show_gyrobutton, plugin[skin_gyro].available == true AND (view.vlookatrange == 180 OR lp_scene === xml.scene));
+		calc(show_gyrobutton, plugin[skin_gyro].available == true);
 		calc(show_vrbutton,   webvr.isavailable == true);
 		calc(show_fsbutton,   device.fullscreensupport == true);
 
