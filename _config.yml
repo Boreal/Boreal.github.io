@@ -1,7 +1,7 @@
 # Site settings
 title: Boreal Blog                                #博客标题
 SEOTitle: Boreal Blog           #显示在浏览器上搜索的时候显示的标题
-header-img: img/home-bg.jpg                            #显示在首页的背景图片
+header-img: img/bg-1.jpg                            #显示在首页的背景图片
 email: lvkongrong@qq.com             #电子邮件
 description: "Every failure is leading towards success."    #网站介绍
 keyword: "Boreal, 吕孔融的博客, Unity, U3D, Cocos2d, 游戏开发, 虚拟现实"    #关键词
