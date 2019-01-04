@@ -57,8 +57,7 @@ input: GFM                            # use Github Flavored Markdown !important
 
 # 评论系统
 # Disqus（https://disqus.com/）
-disqus_username: Boreal_lv
-disqus_url: https://Boreal.github.io/
+#disqus_username: Boreal_lv
 
 # Gitalk
 gitalk:
