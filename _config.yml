@@ -1,7 +1,7 @@
 # Site settings
 title: Boreal Blog                                #博客标题
-SEOTitle: lvongrong的博客 | Boreal Blog           #显示在浏览器上搜索的时候显示的标题
-header-img: img/bg.jpg                            #显示在首页的背景图片
+SEOTitle: Boreal Blog           #显示在浏览器上搜索的时候显示的标题
+header-img: img/home-bg.jpg                            #显示在首页的背景图片
 email: lvkongrong@qq.com             #电子邮件
 description: "Every failure is leading towards success."    #网站介绍
 keyword: "Boreal, 吕孔融的博客, Unity, U3D, Cocos2d, 游戏开发, 虚拟现实"    #关键词
@@ -12,7 +12,7 @@ github_repo: "https://github.com/Boreal/Boreal.github.io.git" # you code reposit
 # Sidebar settings
 sidebar: true                           #是否开启侧边栏
 sidebar-about-description: "Goals determine what you going to be!"   #自我介绍
-sidebar-avatar: /img/about-BY-gentle.jpg      #头像
+sidebar-avatar: /img/icon.jpeg      #头像
 
 
 
@@ -57,13 +57,13 @@ input: GFM                            # use Github Flavored Markdown !important
 
 # 评论系统
 # Disqus（https://disqus.com/）
-disqus_username: Boreal_lv
+#disqus_username: Boreal_lv
 
 # Gitalk
 gitalk:
   enable: true    #是否开启Gitalk评论
-  clientID: f2c84e7629bb1446c1a4                            #生成的clientID
-  clientSecret: ca6d6139d1e1b8c43f8b2e19492ddcac8b322d0d    #生成的clientSecret
+  clientID: c467f503ae0266d7da13                            #生成的clientID
+  clientSecret: 887cfea4fc9e52973716b3d74b766a9859b5b49f    #生成的clientSecret
   repo: Boreal.github.io    #仓库名称
   owner: Boreal    #github用户名
   admin: Boreal
@@ -86,7 +86,7 @@ gitalk:
 
 # Featured Tags
 featured-tags: true                     # 是否使用首页标签
-featured-condition-size: 1              # 相同标签数量大于这个数，才会出现在首页
+featured-condition-size: 0              # 相同标签数量大于这个数，才会出现在首页
 
 
 
@@ -99,16 +99,10 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "WY",
-        href: "http://zhengwuyang.com"
+        title: "右先生",
+        href: "http://zjlbest.xin/"
     },{
-        title: "简书·BY",
-        href: "http://www.jianshu.com/u/e71990ada2fd"
-    },{
-        title: "Apple",
-        href: "https://apple.com"
-    },{
-        title: "Apple Developer",
-        href: "https://developer.apple.com/"
+        title: "寻梦人",
+        href: "https://www.xunmengren.net/"
     }
 ]
