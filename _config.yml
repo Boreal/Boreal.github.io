@@ -60,14 +60,14 @@ input: GFM                            # use Github Flavored Markdown !important
 disqus_username: Boreal_lv
 
 # Gitalk
-    gitalk:
-    enable: true    #是否开启Gitalk评论
-    clientID: c467f503ae0266d7da13                            #生成的clientID
-    clientSecret: 887cfea4fc9e52973716b3d74b766a9859b5b49f    #生成的clientSecret
-    repo: Boreal.github.io    #仓库名称
-    owner: Boreal    #github用户名
-    admin: Boreal
-    distractionFreeMode: true #是否启用类似FB的阴影遮罩
+gitalk:
+  enable: true    #是否开启Gitalk评论
+  clientID: c467f503ae0266d7da13                            #生成的clientID
+  clientSecret: 887cfea4fc9e52973716b3d74b766a9859b5b49f    #生成的clientSecret
+  repo: Boreal.github.io    #仓库名称
+  owner: Boreal    #github用户名
+  admin: Boreal
+  distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
 # 统计
