@@ -19,10 +19,10 @@ sidebar-avatar: /img/icon.jpeg      #头像
 # SNS settings 社交账号
 RSS: false
 # weibo_username:   username
-zhihu_username:     username
-github_username:    username
-facebook_username:  username
-jianshu_username:   username
+#zhihu_username:     username
+#github_username:    username
+#facebook_username:  username
+#jianshu_username:   username
 #twitter_username:  username
 
 
