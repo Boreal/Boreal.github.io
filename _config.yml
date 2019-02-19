@@ -1,7 +1,7 @@
 # Site settings
 title: Boreal Blog                                #博客标题
 SEOTitle: Boreal Blog           #显示在浏览器上搜索的时候显示的标题
-header-img: img/bg.jpg                            #显示在首页的背景图片
+header-img: img/tree.png                            #显示在首页的背景图片
 email: lvkongrong@qq.com             #电子邮件
 description: "Every failure is leading towards success."    #网站介绍
 keyword: "Boreal, 吕孔融的博客, Unity, U3D, Cocos2d, 游戏开发, 虚拟现实"    #关键词
@@ -74,7 +74,7 @@ gitalk:
 
 # Analytics settings
 # Baidu Analytics
-#ba_track_id: b50bf2b12b5338a1845e33832976fd68
+ba_track_id: 59cf89c68124e3cf2480c764b2d56a4d
 
 # Google Analytics
 #ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
