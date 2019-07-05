@@ -2,7 +2,7 @@
 title: Boreal Blog                                #博客标题
 SEOTitle: Boreal Blog           #显示在浏览器上搜索的时候显示的标题
 header-img: img/tree.png                            #显示在首页的背景图片
-email: lvkongrong@foxmail.com             #电子邮件
+email: lvkongrong@gmail.com             #电子邮件
 description: "Every failure is leading towards success."    #网站介绍
 keyword: "Boreal, Unity, U3D, Cocos2d, 游戏开发, 虚拟现实"    #关键词
 url: "http://Boreal.github.io"          #这个就是填写你的博客地址
